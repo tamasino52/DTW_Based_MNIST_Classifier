@@ -3,3 +3,6 @@ pandas
 numpy
 tqdm
 dtaidistance
+sklearn
+multiprocessing
+matplotlib-python

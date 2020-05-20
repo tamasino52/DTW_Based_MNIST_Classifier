@@ -7,13 +7,10 @@ from math import sqrt
 import matplotlib.pyplot as plt
 from multiprocessing.pool import ThreadPool
 import multiprocessing
-import os
 from sklearn.metrics import confusion_matrix
 from sklearn.utils.multiclass import unique_labels
-import warnings
-import time
 
-warnings.filterwarnings("ignore")
+
 num_core = multiprocessing.cpu_count() - 3
 
 
@@ -91,8 +88,7 @@ def plot_confusion_matrix(y_true, y_pred, classes,
 
     # Compute confusion matrix
     cm = confusion_matrix(y_true, y_pred)
-    # Only use the labels that appear in the data
-    classes = classes[unique_labels(y_true, y_pred)]
+
     if normalize:
         cm = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
         print("Normalized confusion matrix")
@@ -130,8 +126,8 @@ def plot_confusion_matrix(y_true, y_pred, classes,
 
 
 def main():
-    num_train = 2000
-    num_test = 500
+    num_train = 1000
+    num_test = 50
     # load train data
     np.random.seed(1)  # seed
     df_train = pd.read_csv("./data/train.csv")  # Loading Dataset
@@ -169,7 +165,6 @@ def main():
     # Accuracy
     correct = 0
     for idx in range(len(predictions)):
-        #print('Pred : {} / Y : {}'.format(predictions[idx], test_y[idx]))
         if predictions[idx] == test_y[idx]:
             correct += 1
 
@@ -177,6 +172,7 @@ def main():
 
     np.set_printoptions(precision=2)
     class_names = np.array(['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'])
+
     # Plot non-normalized confusion matrix
     plot_confusion_matrix(test_y, predictions, classes=class_names, title='Confusion matrix, without normalization')
     plt.show()
