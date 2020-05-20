@@ -1,14 +1,9 @@
-import sys
-import collections
-import itertools
 import cv2
 import pandas as pd
 import numpy as np
-from tqdm import tqdm, trange
-import matplotlib.pyplot as plt
+from tqdm import tqdm
 from dtaidistance import dtw
-from sklearn.metrics import f1_score
-import math
+from math import sqrt
 
 
 def DTW_predict(testX, testY, trainX, trainY):
@@ -19,7 +14,7 @@ def DTW_predict(testX, testY, trainX, trainY):
         for trainSampleIdx, trainSample in enumerate(tqdm(trainX, desc='Search', leave=False)):
             distanceScanX = dtw.distance(testSample[0], trainSample[0])
             distanceScanY = dtw.distance(testSample[1], trainSample[1])
-            distanceScan = math.sqrt(distanceScanX**2 + distanceScanY**2)
+            distanceScan = sqrt(distanceScanX**2 + distanceScanY**2)
             if distanceScan < minDistance:
                 minDistance = distanceScan
                 predictions[testSampleIdx] = trainY[trainSampleIdx]
