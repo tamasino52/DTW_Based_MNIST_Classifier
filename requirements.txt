@@ -1,8 +1,5 @@
-opencv-python
 pandas
 numpy
-tqdm
-dtaidistance
+progressbar2
 sklearn
-multiprocess
 matplotlib
